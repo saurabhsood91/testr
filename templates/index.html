@@ -1,27 +1,15 @@
-{% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+<!DOCTYPE html>
+<html ng-app="TestWise">
+  <head>
+    <meta charset="utf-8">
+    <title>Testr</title>
+  </head>
+  <body ng-controller="MainController as ctrl">
 
-{% block title %}Testwise - Page Not Found{% endblock %}
+  {% assets "js" %}
+    <script src="{{ASSET_URL}}"></script>
+  {% endassets %}
 
-{% block page_content %}
-<div class="page-header" ng-app="testWise" ng-controller="indexCtrl">
-    <p>The local data and time is {{ moment(current_time).format('LLL') }}</p>
-    <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>
-
-{#Based on Template#}
-    <h1>Hello, {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h1>
-    {{ wtf.quick_form(form) }}
-
-{#Based on AngularJS#}
-    <label>Name:</label>
-    <input type="text" data-ng-model="yourName" placeholder="Enter a name here">
-    <hr>
-    <h1>Hello {{yourName|angular}}!</h1>
-
-</div>
-
-{% endblock %}
-{% block scripts %}
-    {{ super() }}
-    <script src="../static/angular/index.js"></script>
-{% endblock %}
+  {{ctrl.yourName|angular}}
+  </body>
+</html>

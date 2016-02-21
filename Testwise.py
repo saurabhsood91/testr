@@ -11,11 +11,10 @@ from werkzeug.security import generate_password_hash, \
      check_password_hash
 import json
 
-
-
+from flask.ext.assets import Environment, Bundle
 
 app = Flask(__name__)
-
+assets = Environment(app)
 app.config['SECRET_KEY'] = 'N0tHingIsImpo5Sibl3'
 app.config['MONGOALCHEMY_DATABASE'] = 'testr'
 app.config['DEBUG'] = True
@@ -24,6 +23,9 @@ bootstrap = Bootstrap(app)
 moment = Moment(app)
 db = MongoAlchemy(app)
 Triangle(app)
+
+js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js')
+assets.register('js', js)
 
 
 class User(db.Document):
