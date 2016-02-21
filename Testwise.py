@@ -35,7 +35,7 @@ class User(db.Document):
 
 def authenticate(username, password):
     user = User.query.filter(User.username == username).first();
-    if user and safe_str_cmp(user.password.encode('utf-8'), password.encode('utf-8')):
+    if user and safe_str_cmp(user.password.encode('utf-8'), generate_password_hash(password).encode('utf-8')):
         user.id = str(user.mongo_id)
         # for item in db.User.find():
         #     print item.get('_id')
@@ -107,7 +107,7 @@ def login():
 
         checkUserName = User.query.filter(User.username == username).first();
 
-        if checkUserName.password == check_password_hash(password):
+        if check_password_hash(checkUserName.password, password):
             print "Username Password Matched";
             flash('Logged in');
             #return render_template('404.html'), 500
