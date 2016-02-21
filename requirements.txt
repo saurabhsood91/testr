@@ -1,7 +1,9 @@
 flask
 flask-mongoalchemy
 flask-wtf
-flask-bootstrap 
+flask-bootstrap
 flask-assets
 flask-triangle
 flask-moment
+flask-jwt
+requests
