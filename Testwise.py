@@ -36,24 +36,30 @@ css = Bundle('bower_components/angular-bootstrap/ui-bootstrap-csp.css', 'css/sty
 assets.register('css',css)
 #Configuration of DB
 app.config['MONGOALCHEMY_DATABASE'] = 'testr'
-db = MongoAlchemy(app)
+db = MongoAlchemy(app) 
 Triangle(app)
 
 class User(db.Document):
+    role = db.StringField(default='')
     username = db.StringField()
     password = db.StringField()
     emailId = db.StringField()
 
+class Course(db.Document):
+    instructor = db.StringField(default='')
+    course_id = db.StringField()
+    course_name = db.StringField()
 
 class Test(db.Document):
+    course_id = db.StringField()
     test_name = db.StringField()
     questions = db.ListField(db.StringField())
 
 class Questions(db.Document):
     question = db.StringField()
     reference_answer = db.StringField()
-    tags = db.ListField(db.StringField())
-    options = db.ListField(db.StringField())
+    tags = db.ListField(db.StringField(), default= [])
+    options = db.ListField(db.StringField(), default= [])
 
 
 
@@ -82,11 +88,39 @@ def protected():
 def index():
     return render_template('index.html')
 
+@app.route('/addCourse', methods=['POST'])
+def add_course():
+    data = json.loads(request.data.decode())
+    course_id= data['course_id']
+    course_name=  data['course_name']
+    new_course = Course(course_id=course_id, course_name = course_name)
+    new_course.save()
+    return json.dumps({"auth":"1"})
+
+
+@app.route('/showInstructors', methods=['POST'])
+def show_instructors():
+    resultSet= User.query.filter(User.role == 'instructor').all()
+    for each in resultSet:
+        test_names.append({"Username":each.username, "Email":each.emailId})
+    return json.dumps(test_names)
+
+@app.route('/assignAsInstructor', methods=['POST'])
+def assign_as_instructor():
+    data = json.loads(request.data.decode())
+    pairs = data['pairs']
+    for pair  in pairs:
+        res = User.query.filter(User.username == pair['username'])
+        res.set(User.role,'instructor').execute()
+        res = Course.query.filter(Course.course_id == pair['course_id'])
+        res.set(Course.instructor, pair['username']).execute()
+        return json.dumps({"auth":"1"})
 
 @app.route('/addtest', methods=['POST'])
 def add_test():
     data = json.loads(request.data.decode())
     test_name = data['test_name']
+    course_id = data['course_id']
     questions = data['questions']
 
     question_ids = []
@@ -96,6 +130,7 @@ def add_test():
             id = question['id']
             question_ids.append(id)
         else:
+
             question_type = question['type']
             actual_question = question['question']
             reference_answer = question.get('reference_answer')
@@ -106,10 +141,22 @@ def add_test():
 
             question_object.save()
             question_ids.append(str(question_object.mongo_id))
-    return json.dumps({})
 
+            test_object = Test(course_id= course_id, test_name=test_name, questions = question_ids) 
+            test_object.save()
 
+    return json.dumps({"test_id":str(question_object.mongo_id)})
 
+@app.route('/viewbycourse', methods=['POST'])
+def view_by_course():
+    data = json.loads(request.data.decode())
+    test_names = []
+    course_id = data['course_id']
+    resultSet= Test.query.filter(Test.course_id == course_id).all()
+
+    for each in resultSet:
+        test_names.append({"course_id":each.course_id, "test_name":each.test_name})
+    return json.dumps(test_names)
 
 @app.route('/register',methods=['POST'])
 def register():
