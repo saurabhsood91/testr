@@ -6,6 +6,9 @@ from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired #, InputRequired ,Required
 from flask.ext.triangle import Triangle
+from flask.ext.mongoalchemy import MongoAlchemy
+
+
 
 
 app = Flask(__name__)
@@ -13,6 +16,11 @@ app.config['SECRET_KEY'] = 'N0tHingIsImpo5Sibl3'
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 Triangle(app)
+
+#Configuration of DB
+app.config['MONGOALCHEMY_DATABASE'] = 'testr'
+db = MongoAlchemy(app)
+
 
 
 # Class name ( Type of Object )
