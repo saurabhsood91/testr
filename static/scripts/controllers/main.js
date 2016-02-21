@@ -26,6 +26,11 @@ app.controller('MainController', ['$uibModal', function($modal){
         templateUrl: 'templates/landingpage.html',
         controller: 'MainController',
         controllerAs: 'ctrl'
+      },
+      'loginbutton': {
+        templateUrl: 'templates/loginbutton.html',
+        controller: 'MainController',
+        controllerAs: 'ctrl'
       }
     }
   });
