@@ -7,6 +7,8 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired #, InputRequired ,Required
 from flask.ext.triangle import Triangle
 from flask.ext.mongoalchemy import MongoAlchemy
+from werkzeug.security import generate_password_hash, \
+     check_password_hash
 import json
 
 
@@ -63,7 +65,7 @@ def register():
             return json.dumps({'auth': 0})
 
         #print username + " " + password + " " + emailID ;
-        checkUserName = User(username=username, password=password, emailId=emailID);
+        checkUserName = User(username=username, password=generate_password_hash(password), emailId=emailID);
         #print checkUserName
         checkUserName.save();
     # return render_template('404.html'), 500
@@ -80,7 +82,7 @@ def login():
 
         checkUserName = User.query.filter(User.username == username).first();
 
-        if checkUserName.password == password:
+        if checkUserName.password == check_password_hash(password):
             print "Username Password Matched";
             flash('Logged in');
             #return render_template('404.html'), 500
