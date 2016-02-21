@@ -1,4 +1,5 @@
 angular.module('TestWise')
+<<<<<<< HEAD
 .controller('LoginModalInstanceCtrl', ['$uibModalInstance', '$http', function ($uibModalInstance, $http) {
   var self = this;
   self.cancel = function() {
