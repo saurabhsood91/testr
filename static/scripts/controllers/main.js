@@ -19,6 +19,29 @@ app.controller('MainController', ['$uibModal', '$state', function($modal, $state
       }
     });
   };
+
+
+  self.openRegisterDialog = function()
+  {
+    var modalInstance = $modal.open(
+        {
+          templateUrl: 'templates/registermodal.html',
+          controller: 'LoginModalInstanceCtrl as ctrl',
+          backdrop: 'static'
+        }
+    );
+    modalInstance.result.then(function(data){
+      // Set token on scope
+      // self.token = data.token;
+      if(data) {
+        // modalInstance.close('loggedin');
+        $state.go('loggedin');
+      }
+    });
+  }
+
+
+
 }])
 .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
   $urlRouterProvider.otherwise('/');
