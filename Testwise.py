@@ -7,12 +7,10 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired #, InputRequired ,Required
 from flask.ext.triangle import Triangle
 from flask import Flask, request, send_from_directory
-from flask.ext.assets import Environment, Bundle
 from flask.ext.mongoalchemy import MongoAlchemy
 from werkzeug.security import generate_password_hash, \
      check_password_hash
 import json
-
 from flask.ext.assets import Environment, Bundle
 
 app = Flask(__name__)
@@ -23,6 +21,7 @@ app.config['DEBUG'] = True
 
 bootstrap = Bootstrap(app)
 moment = Moment(app)
+db = MongoAlchemy(app)
 Triangle(app)
 
 js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js', 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js', 'scripts/controllers/loggedinmodalcontroller.js',

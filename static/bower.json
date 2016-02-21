@@ -20,7 +20,12 @@
     "angular": "~1.5.0",
     "angular-bootstrap": "~1.1.2",
     "bootstrap": "~3.3.6",
+<<<<<<< HEAD
     "font-awesome": "~4.5.0",
     "angular-ui-router": "^0.2.18"
+=======
+    "angular-ui-router": "^0.2.18",
+    "font-awesome": "~4.5.0"
+>>>>>>> 5b59fd1e5ffee17aa03b010168c621a28f8b682d
   }
 }
