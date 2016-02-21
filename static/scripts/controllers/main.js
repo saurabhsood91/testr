@@ -1,6 +1,6 @@
 var app = angular.module('TestWise', ['ui.bootstrap', 'ui.router']);
 
-app.controller('MainController', ['$uibModal', function($modal){
+app.controller('MainController', ['$uibModal', '$state', function($modal, $state){
   var self = this;
   self.yourName = "Karthik";
 
@@ -13,7 +13,10 @@ app.controller('MainController', ['$uibModal', function($modal){
     modalInstance.result.then(function(data){
       // Set token on scope
       // self.token = data.token;
-      // $state.go('loggedin');
+      if(data) {
+        // modalInstance.close('loggedin');
+        $state.go('loggedin');
+      }
     });
   };
 }])
@@ -34,4 +37,19 @@ app.controller('MainController', ['$uibModal', function($modal){
       }
     }
   });
+  $stateProvider.state('loggedin', {
+    url: '/',
+    views: {
+      '': {
+        templateUrl: 'templates/home.html',
+        controller: 'HomeController',
+        controlleras: 'ctrl'
+      },
+      'loginbutton': {
+        templateUrl: 'templates/loggedinbanner.html',
+        controller: 'HomeController',
+        controllerAs: 'ctrl'
+      }
+    }
+  })
 }]);

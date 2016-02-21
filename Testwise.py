@@ -25,7 +25,8 @@ bootstrap = Bootstrap(app)
 moment = Moment(app)
 Triangle(app)
 
-js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js', 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js', 'scripts/controllers/loggedinmodalcontroller.js', 'bower_components/angular-ui-router/release/angular-ui-router.js')
+js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js', 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js', 'scripts/controllers/loggedinmodalcontroller.js',
+    'bower_components/angular-ui-router/release/angular-ui-router.js', 'scripts/controllers/homecontroller.js')
 assets.register('js', js)
 
 
@@ -83,9 +84,9 @@ def register():
 @app.route('/login',methods=['POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username'] ;
-        password = request.form['password'] ;
-
+        data =json.loads(request.data.decode())
+        username = data['username']
+        password = data['password']
         checkUserName = User.query.filter(User.username == username).first();
 
         if check_password_hash(checkUserName.password, password):
@@ -114,13 +115,7 @@ def internal_server_error(e):
 def loggedinmodal(path):
     return render_template(path)
 
-# @app.route('/templates/landingpage.html')
-# def landingpage():
-#     return render_template('landingpage.html')
-#
-# @app.route('/templates/loginbutton.html')
-# def landingpage():
-#     return render_template('loginbutton.html')
+
 
 if __name__ == '__main__':
     app.run()
