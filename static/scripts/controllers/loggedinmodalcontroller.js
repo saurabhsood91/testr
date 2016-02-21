@@ -1,6 +1,9 @@
 angular.module('TestWise')
-.controller('LoginModalInstanceCtrl', ['$uibModal', '$http', function ($uibModal, $http) {
+.controller('LoginModalInstanceCtrl', ['$uibModalInstance', '$http', function ($uibModalInstance, $http) {
   var self = this;
+  self.cancel = function() {
+    $uibModalInstance.close('cancel');
+  }
 }]);
   // self.login = function() {
   //   // Login logic goes here
