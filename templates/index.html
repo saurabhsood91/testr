@@ -3,14 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Testr</title>
-    {% assets "css" %}
-    <link  rel="stylesheet" type="text/css" href="{{ASSET_URL}}"/>
-  {% endassets %}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poiret+One"/>
-
   </head>
   <body ng-controller="MainController as ctrl">
-
     <nav class="navbar navbar-inverse navbar-static-top">
       <div class="container-fluid">
         <div class="navbar-header"><a class="navbar-brand brand-title brandname">Testr</a></div>
@@ -21,10 +16,7 @@
         </div>
       </div>
     </nav>
-
-  {% assets "js" %}
-    <script src="{{ASSET_URL}}"></script>
-  {% endassets %}
-
+  </head>
+  <body ng-controller="MainController as ctrl">
   </body>
 </html>

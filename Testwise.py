@@ -13,6 +13,7 @@ from werkzeug.security import generate_password_hash, \
      check_password_hash
 import json
 
+from flask.ext.assets import Environment, Bundle
 
 app = Flask(__name__)
 assets = Environment(app)
@@ -34,6 +35,9 @@ assets.register('css',css)
 app.config['MONGOALCHEMY_DATABASE'] = 'testr'
 db = MongoAlchemy(app)
 Triangle(app)
+
+js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js')
+assets.register('js', js)
 
 
 class User(db.Document):
