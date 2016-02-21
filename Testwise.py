@@ -36,7 +36,7 @@ app.config['MONGOALCHEMY_DATABASE'] = 'testr'
 db = MongoAlchemy(app)
 Triangle(app)
 
-js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/*.js', 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
+js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js', 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js', 'scripts/controllers/loggedinmodalcontroller.js')
 assets.register('js', js)
 
 
