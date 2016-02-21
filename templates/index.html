@@ -1,27 +1,27 @@
-{% extends "base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+<!DOCTYPE html>
+<html ng-app="TestWise">
+  <head>
+    <meta charset="utf-8">
+    <title>Testr</title>
+    {% assets "css" %}
+    <link  rel="stylesheet" type="text/css" href="{{ASSET_URL}}"/>
+  {% endassets %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poiret+One"/>
 
-{% block title %}Testwise - Page Not Found{% endblock %}
+  </head>
+  <body ng-controller="MainController as ctrl">
 
-{% block page_content %}
-<div class="page-header" ng-app="testWise" ng-controller="indexCtrl">
-    <p>The local data and time is {{ moment(current_time).format('LLL') }}</p>
-    <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container-fluid">
+        <div class="navbar-header"><a class="navbar-brand brand-title brandname">Testr</a></div>
+        <div ui-view="loginbutton"></div>
+      </div>
+    </nav>
+  <div ui-view=''></div>
 
-{#Based on Template#}
-    <h1>Hello, {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h1>
-    {{ wtf.quick_form(form) }}
+  {% assets "js" %}
+    <script src="{{ASSET_URL}}"></script>
+  {% endassets %}
 
-{#Based on AngularJS#}
-    <label>Name:</label>
-    <input type="text" data-ng-model="yourName" placeholder="Enter a name here">
-    <hr>
-    <h1>Hello {{yourName|angular}}!</h1>
-
-</div>
-
-{% endblock %}
-{% block scripts %}
-    {{ super() }}
-    <script src="../static/angular/index.js"></script>
-{% endblock %}
+  </body>
+</html>
