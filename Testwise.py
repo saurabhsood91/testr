@@ -34,7 +34,7 @@ Triangle(app)
 
 
 class User(db.Document):
-    name = db.StringField();
+    username = db.StringField();
     password = db.StringField();
     emailId = db.StringField();
 
@@ -59,18 +59,39 @@ def index():
 @app.route('/register',methods=['POST'])
 def register():
     if request.method == 'POST':
-        print "HEllo"
-        name = request.form['name'] ;
+        username = request.form['username'] ;
         password = request.form['password'] ;
         emailID = request.form['emailID'];
-        print name + " " + password + " " + emailID ;
-        checkUserName = User(name=name, password=password, emailId=emailID);
-        checkUserName.save();
-        #print name
-    #User(name=)
 
+        checkUserName = User.query.filter(User.username == username).first();
+        #print checkUserName
+
+        if checkUserName != None :
+            #checkUserName.remove();
+            return render_template('404.html'), 500
+
+        #print username + " " + password + " " + emailID ;
+        checkUserName = User(username=username, password=password, emailId=emailID);
+        #print checkUserName
+        checkUserName.save();
     return render_template('404.html'), 500
 
+@app.route('/login',methods=['POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username'] ;
+        password = request.form['password'] ;
+
+        checkUserName = User.query.filter(User.username == username).first();
+
+        if checkUserName.password == password:
+            print "Username Password Matched";
+            flash('Logged in');
+            return render_template('404.html'), 500
+        else:
+            print "Remember your password you fool!";
+            flash('Remember your password you fool!');
+            return render_template('404.html'), 500
 
 @app.errorhandler(404)
 def page_not_found(e):
