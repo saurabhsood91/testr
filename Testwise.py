@@ -37,20 +37,10 @@ app.config['MONGOALCHEMY_DATABASE'] = 'testr'
 db = MongoAlchemy(app)
 Triangle(app)
 
-js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js', 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js', 'scripts/controllers/loggedinmodalcontroller.js')
-assets.register('js', js)
-
-
 class User(db.Document):
     username = db.StringField();
     password = db.StringField();
     emailId = db.StringField();
-
-css = Bundle('bower_components/angular-bootstrap/ui-bootstrap-csp.css', 'css/style.css', 'bower_components/bootstrap/dist/css/bootstrap.css')
-assets.register('css',css)
-
-css = Bundle('bower_components/angular-bootstrap/ui-bootstrap-csp.css')
-assets.register('css',css)
 
 @app.route('/',methods=['GET', 'POST'])
 def index():
