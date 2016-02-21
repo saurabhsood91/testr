@@ -43,7 +43,12 @@ app.controller('MainController', ['$uibModal', '$state', function($modal, $state
       '': {
         templateUrl: 'templates/home.html',
         controller: 'HomeController',
-        controlleras: 'ctrl'
+        controllerAs: 'ctrl'
+      },
+      'sidebar@loggedin': {
+        templateUrl: 'templates/sidebar.html',
+        controller: 'HomeController',
+        controllerAs: 'ctrl'
       },
       'loginbutton': {
         templateUrl: 'templates/loggedinbanner.html',
@@ -51,5 +56,15 @@ app.controller('MainController', ['$uibModal', '$state', function($modal, $state
         controllerAs: 'ctrl'
       }
     }
-  })
+  });
+  $stateProvider.state('loggedin.addtest', {
+    url: '/',
+    views: {
+      'maincontent': {
+        templateUrl: 'templates/addtest.html',
+        controller: 'HomeController',
+        controllerAs: 'ctrl'
+      }
+    }
+  });
 }]);
