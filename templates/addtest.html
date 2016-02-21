@@ -1,1 +1,62 @@
-Add Test
+<div class="row">
+        <div class="col-xs-2 col-sm-3">
+            <label for="numberOfQuestions"> Number of Questions : </label>
+        </div>
+        <div class="col-xs-4 col-sm-5">
+            <input type="number" id="numberOfQuestions" class="form-control" ng-model="ctrl.numberOfQuestions" ng-minlength="1" ng-maxlength="3" min="1"
+           max="100" />
+        </div>
+
+        <div class="col-xs-2 col-sm-3">
+            <label for="test_name"> Test Name : </label>
+        </div>
+        <div class="col-xs-4 col-sm-5">
+            <input type="text" id="test_name" class="form-control" ng-model="ctrl.test_name"  />
+        </div>
+
+        <div class="col-xs-2 col-sm-3">
+            <label for="course_id"> Course ID : </label>
+        </div>
+        <div class="col-xs-4 col-sm-5">
+            <input type="text" id="course_id" class="form-control" ng-model="ctrl.course_id"  />
+        </div>
+
+</div>
+<div class="container-fluid" class="row col-xs-12 col-sm-12">
+    <div ng-repeat="question in ctrl.range(1,ctrl.numberOfQuestions) track by $index">
+        <div class="row">
+        <label for="Question{{ question }}" class="col-xs-6 col-sm-6"> Question {{ question | angular }}</label>
+        <input type="text" ng-model="ctrl.values['question_'+$index]" placeholder="Enter the question {{ question | angular }} here" class="col-xs-6 col-sm-6" />
+        <br>
+        </div><div class="row">
+        <label for="Tags" class="col-xs-6 col-sm-6"> Tags for the Question </label>
+        <input type="text" ng-model="ctrl.values['question_tags_'+$index]" placeholder="Enter the tags seperated by commas" class="col-xs-6 col-sm-6"/>
+        <br>
+        </div><div class="row">
+        <label for="Answer Type {{ question | angular }}" class="col-xs-6 col-sm-6"> Answer Type </label>
+        <select name="choosedOption" ng-options="option.name for option in ctrl.optionsAvailable.availableOptions track by option.id" ng-model="ctrl.values['answer_type_'+$index]" class="col-xs-6 col-sm-6"></select>
+        <br>
+        </div><div class="row" ng-if="ctrl.values['answer_type_'+$index].id == 1 || ctrl.values['answer_type_'+$index].id == 2">
+        <label for="Number of Options for Question {{ question | angular }}" class="col-xs-6 col-sm-6" ng-if="ctrl.values['answer_type_'+$index].id == 1 || ctrl.values['answer_type_'+$index].id == 2" > Enter the solution seperated by comma {{ question | angular }}  </label>
+        <input type="text" ng-model="ctrl.values['answer_'+$index]" ng-if="ctrl.values['answer_type_'+$index].id == 1 || ctrl.values['answer_type_'+$index].id == 2" class="col-xs-6 col-sm-6"/>
+        <br ng-if="ctrl.values['answer_type_'+$index].id == 1 || ctrl.values['answer_type_'+$index].id == 2">
+        </div><div class="row" ng-if="ctrl.values['answer_type_'+$index].id == 1 || ctrl.values['answer_type_'+$index].id == 2">
+        <label for="Reference Answer {{ question| angular }}" class="col-xs-6 col-sm-6"> Reference Answer for Question {{ question | angular }}</label>
+        <input type="text" ng-model="ctrl.values['reference_answer_'+$index]" class="col-xs-6 col-sm-6"/>
+        <br>
+        </div>
+    </div>
+</div>
+
+
+{#button(type="button" class="btn btn-default" ng-click="ctrl.print()")#}
+
+<button type="button" class="btn btn-danger" ng-click="ctrl.print()"> SUBMIT </button>
+{#    label(for="Answer {{question}}" , class="col-md-3") Answer for Question {{ question }}#}
+{#    input(type="text", ng-model="ctrl.values['answer_'+$index]", ng-if="ctrl.values['answer_type_'+$index].id != 0 && ctrl.values['answer_type_'+$index].id != 3 &&  ctrl.values['answer_type_'+$index].id" )#}
+
+{#     label(for="Referenece snswer {{question}}" , class="col-md-3") Reference answer for Question {{ question }}#}
+{#     input(type="text", ng-model="ctrl.values['reference_answer_'+$index]")#}
+
+
+{#<h1>{{ ctrl.numberOfQuestions|angular }}</h1>#}
