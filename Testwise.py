@@ -35,10 +35,8 @@ class User(db.Document):
 
 def authenticate(username, password):
     user = User.query.filter(User.username == username).first();
-    if user and safe_str_cmp(user.password.encode('utf-8'), generate_password_hash(password).encode('utf-8')):
+    if user and check_password_hash(user.password,password):
         user.id = str(user.mongo_id)
-        # for item in db.User.find():
-        #     print item.get('_id')
         return user
 
 
@@ -78,9 +76,9 @@ def index():
 @app.route('/register',methods=['POST'])
 def register():
     if request.method == 'POST':
-        username = request.form['username'] ;
-        password = request.form['password'] ;
-        emailID = request.form['emailID'];
+        username = request.json['username'] ;
+        password = request.json['password'] ;
+        emailID = request.json['emailID'];
 
         checkUserName = User.query.filter(User.username == username).first();
         #print checkUserName
@@ -102,8 +100,8 @@ def register():
 @app.route('/login',methods=['POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username'] ;
-        password = request.form['password'] ;
+        username = request.json['username'] ;
+        password = request.json['password'] ;
 
         checkUserName = User.query.filter(User.username == username).first();
 
