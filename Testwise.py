@@ -7,6 +7,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired #, InputRequired ,Required
 from flask.ext.triangle import Triangle
 from flask.ext.mongoalchemy import MongoAlchemy
+import json
 
 
 
@@ -59,13 +60,15 @@ def register():
 
         if checkUserName != None :
             #checkUserName.remove();
-            return render_template('404.html'), 500
+            return json.dumps({'auth': 0})
 
         #print username + " " + password + " " + emailID ;
         checkUserName = User(username=username, password=password, emailId=emailID);
         #print checkUserName
         checkUserName.save();
-    return render_template('404.html'), 500
+    # return render_template('404.html'), 500
+    return json.dumps({'auth': 1})
+
 
 @app.route('/login',methods=['POST'])
 def login():
@@ -78,11 +81,13 @@ def login():
         if checkUserName.password == password:
             print "Username Password Matched";
             flash('Logged in');
-            return render_template('404.html'), 500
+            #return render_template('404.html'), 500
+            return json.dumps({'auth': 1})
         else:
             print "Remember your password you fool!";
             flash('Remember your password you fool!');
-            return render_template('404.html'), 500
+            #return render_template('404.html'), 500
+            return json.dumps({'auth': 0})
 
 @app.errorhandler(404)
 def page_not_found(e):
