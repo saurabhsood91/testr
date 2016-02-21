@@ -1,4 +1,4 @@
-from flask import Flask, render_template ,session , redirect , url_for, flash
+from flask import Flask, render_template ,session , redirect , url_for, flash , request
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.moment import Moment
 from datetime import datetime
@@ -28,6 +28,11 @@ assets.register('css',css)
 app.config['MONGOALCHEMY_DATABASE'] = 'testr'
 db = MongoAlchemy(app)
 
+class User(db.Document):
+    name = db.StringField();
+    password = db.StringField();
+    emailId = db.StringField();
+
 # Class name ( Type of Object )
 class NameForm(Form):
     name = StringField('What is your name?', validators=[DataRequired()])
@@ -52,7 +57,10 @@ def index():
 
 @app.route('/register',methods=['POST'])
 def register():
-    print "TEST";
+    print "TEST"
+    user = request.form['name']
+    print user
+    #User(name=)
     return render_template('404.html'), 500
 
 
