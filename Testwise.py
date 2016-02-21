@@ -14,6 +14,9 @@ from flask.ext.mongoalchemy import MongoAlchemy
 app = Flask(__name__)
 assets = Environment(app)
 app.config['SECRET_KEY'] = 'N0tHingIsImpo5Sibl3'
+app.config['MONGOALCHEMY_DATABASE'] = 'testr'
+app.config['DEBUG'] = True
+
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 Triangle(app)
@@ -27,6 +30,7 @@ assets.register('css',css)
 #Configuration of DB
 app.config['MONGOALCHEMY_DATABASE'] = 'testr'
 db = MongoAlchemy(app)
+Triangle(app)
 
 
 class User(db.Document):
@@ -34,16 +38,13 @@ class User(db.Document):
     password = db.StringField();
     emailId = db.StringField();
 
-# Class name ( Type of Object )
 class NameForm(Form):
     name = StringField('What is your name?', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
-#Awesome implementation
 @app.route('/',methods=['GET', 'POST'])
 def index():
-    #name = None
     form = NameForm()
     if form.validate_on_submit():
         old_name = session.get('name')
@@ -52,7 +53,6 @@ def index():
         session['name'] = form.name.data
         form.name.data = ''
         return redirect(url_for('index'))
-        #form.name.data = ''
     return render_template('index.html',current_time=datetime.utcnow(),form=form, name=session.get('name'))
 
 
@@ -64,7 +64,7 @@ def register():
         password = request.form['password'] ;
         emailID = request.form['emailID'];
         print name + " " + password + " " + emailID ;
-        checkUserName = User(name=name, password=password, emailID=emailID);
+        checkUserName = User(name=name, password=password, emailId=emailID);
         checkUserName.save();
         #print name
     #User(name=)
