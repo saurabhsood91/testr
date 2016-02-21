@@ -6,13 +6,19 @@ from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired #, InputRequired ,Required
 from flask.ext.triangle import Triangle
+from flask import Flask, request, send_from_directory
+from flask.ext.assets import Environment, Bundle
 
 
 app = Flask(__name__)
+assets = Environment(app)
 app.config['SECRET_KEY'] = 'N0tHingIsImpo5Sibl3'
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 Triangle(app)
+
+js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js')
+assets.register('js', js)
 
 
 # Class name ( Type of Object )
