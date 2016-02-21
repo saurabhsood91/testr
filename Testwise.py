@@ -29,7 +29,7 @@ js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js'
 assets.register('js', js)
 
 
-css = Bundle('bower_components/angular-bootstrap/ui-bootstrap-csp.css', 'css/style.css', 'bower_components/bootstrap/dist/css/bootstrap.css')
+css = Bundle('bower_components/angular-bootstrap/ui-bootstrap-csp.css', 'css/style.css', 'bower_components/bootstrap/dist/css/bootstrap.css', 'bower_components/font-awesome/css/font-awesome.css')
 assets.register('css',css)
 
 class User(db.Document):
