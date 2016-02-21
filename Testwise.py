@@ -40,9 +40,21 @@ db = MongoAlchemy(app)
 Triangle(app)
 
 class User(db.Document):
-    username = db.StringField();
-    password = db.StringField();
-    emailId = db.StringField();
+    username = db.StringField()
+    password = db.StringField()
+    emailId = db.StringField()
+
+
+class Test(db.Document):
+    test_name = db.StringField()
+    questions = db.ListField(db.StringField())
+
+class Questions(db.Document):
+    question = db.StringField()
+    reference_answer = db.StringField()
+    tags = db.ListField(db.StringField())
+    options = db.ListField(db.StringField())
+
 
 
 def authenticate(username, password):
@@ -55,7 +67,7 @@ def authenticate(username, password):
 def identity(payload):
     user_id = payload['identity']
     user = User.query.filter(User.mongo_id == user_id).first();
-    return user.mongo_id;
+    return user.mongo_id
 
 jwt = JWT(app, authenticate, identity)
 
@@ -71,14 +83,42 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/addtest', methods=['POST'])
+def add_test():
+    data = json.loads(request.data.decode())
+    test_name = data['test_name']
+    questions = data['questions']
+
+    question_ids = []
+
+    for question in questions:
+        if question.get('id') != None:
+            id = question['id']
+            question_ids.append(id)
+        else:
+            question_type = question['type']
+            actual_question = question['question']
+            reference_answer = question.get('reference_answer')
+            tags = question.get('tags')
+            options = question.get('options')
+
+            question_object = Questions(question=actual_question, reference_answer=reference_answer, tags=tags, options=options)
+
+            question_object.save()
+            question_ids.append(str(question_object.mongo_id))
+    return json.dumps({})
+
+
+
+
 @app.route('/register',methods=['POST'])
 def register():
     if request.method == 'POST':
-        username = request.json['username'] ;
-        password = request.json['password'] ;
-        emailID = request.json['emailID'];
+        username = request.json['username']
+        password = request.json['password']
+        emailID = request.json['emailID']
 
-        checkUserName = User.query.filter(User.username == username).first();
+        checkUserName = User.query.filter(User.username == username).first()
         #print checkUserName
 
         if checkUserName != None :
@@ -96,7 +136,7 @@ def register():
 def test():
     authorizationCode = request.headers['Authorization'];
     userID = identity(jwt.jwt_decode_callback(authorizationCode.split(" ")[1]))
-    checkUserName = User.query.filter(User.mongo_id == userID).first();
+    checkUserName = User.query.filter(User.mongo_id == userID).first()
     if ( checkUserName != None ):
         return render_template('404.html'), 501
 
@@ -111,16 +151,16 @@ def login():
         data =json.loads(request.data.decode())
         username = data['username']
         password = data['password']
-        checkUserName = User.query.filter(User.username == username).first();
+        checkUserName = User.query.filter(User.username == username).first()
 
         if check_password_hash(checkUserName.password, password):
-            print "Username Password Matched";
+            print "Username Password Matched"
             flash('Logged in');
             #return render_template('404.html'), 500
             return json.dumps({'auth': 1})
         else:
-            print "Remember your password you fool!";
-            flash('Remember your password you fool!');
+            print "Remember your password you fool!"
+            flash('Remember your password you fool!')
             #return render_template('404.html'), 500
             return json.dumps({'auth': 0})
 
