@@ -8,6 +8,8 @@ from wtforms.validators import DataRequired #, InputRequired ,Required
 from flask.ext.triangle import Triangle
 from flask import Flask, request, send_from_directory
 from flask.ext.assets import Environment, Bundle
+from flask.ext.mongoalchemy import MongoAlchemy
+
 
 app = Flask(__name__)
 assets = Environment(app)
@@ -22,6 +24,9 @@ assets.register('js', js)
 
 css = Bundle('bower_components/angular-bootstrap/ui-bootstrap-csp.css')
 assets.register('css',css)
+#Configuration of DB
+app.config['MONGOALCHEMY_DATABASE'] = 'testr'
+db = MongoAlchemy(app)
 
 # Class name ( Type of Object )
 class NameForm(Form):
