@@ -21,7 +21,7 @@ bootstrap = Bootstrap(app)
 moment = Moment(app)
 Triangle(app)
 
-js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js', 'bower_components/angular-bootstrap/ui-bootstrap.js')
+js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/*.js', 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js')
 assets.register('js', js)
 
 
@@ -82,6 +82,10 @@ def internal_server_error(e):
     return render_template('404.html'), 500
 
 
+
+@app.route('/templates/loggedinmodal.html')
+def static_file():
+    return render_template('loggedinmodal.html')
 
 
 if __name__ == '__main__':
