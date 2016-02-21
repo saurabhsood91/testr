@@ -11,13 +11,14 @@ from flask_jwt import JWT, jwt_required, current_identity
 from werkzeug.security import safe_str_cmp
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
-
+import requests
 
 
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'N0tHingIsImpo5Sibl3'
+app.config['JWT_AUTH_URL_RULE'] = '/login'
 app.config['MONGOALCHEMY_DATABASE'] = 'testr'
 app.config['DEBUG'] = True
 
@@ -94,27 +95,21 @@ def register():
     # return render_template('404.html'), 500
     return json.dumps({'auth': 1})
 
+@app.route('/test',methods=['GET'])
+def test():
+    authorizationCode = request.headers['Authorization'];
+    userID = identity(jwt.jwt_decode_callback(authorizationCode.split(" ")[1]))
+    checkUserName = User.query.filter(User.mongo_id == userID).first();
+    if ( checkUserName != None ):
+        return render_template('404.html'), 501
+
+    #print identity(authorizationCode.split(" ")[1])
+    #print identity(jwt.jwt_decode_callback(authorizationCode.split(" ")[1]))
+    return render_template('404.html'), 500
 
 
 
-@app.route('/login',methods=['POST'])
-def login():
-    if request.method == 'POST':
-        username = request.json['username'] ;
-        password = request.json['password'] ;
 
-        checkUserName = User.query.filter(User.username == username).first();
-
-        if check_password_hash(checkUserName.password, password):
-            print "Username Password Matched";
-            flash('Logged in');
-            #return render_template('404.html'), 500
-            return json.dumps({'auth': 1})
-        else:
-            print "Remember your password you fool!";
-            flash('Remember your password you fool!');
-            #return render_template('404.html'), 500
-            return json.dumps({'auth': 0})
 
 @app.errorhandler(404)
 def page_not_found(e):
