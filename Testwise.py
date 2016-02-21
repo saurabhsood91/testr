@@ -7,6 +7,8 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired #, InputRequired ,Required
 from flask.ext.triangle import Triangle
 from flask.ext.mongoalchemy import MongoAlchemy
+from flask_jwt import JWT, jwt_required, current_identity
+from werkzeug.security import safe_str_cmp
 import json
 
 
@@ -28,6 +30,30 @@ class User(db.Document):
     username = db.StringField();
     password = db.StringField();
     emailId = db.StringField();
+
+
+def authenticate(username, password):
+    user = User.query.filter(User.username == username).first();
+    if user and safe_str_cmp(user.password.encode('utf-8'), password.encode('utf-8')):
+        user.id = str(user.mongo_id)
+        # for item in db.User.find():
+        #     print item.get('_id')
+        return user
+
+
+def identity(payload):
+    user_id = payload['identity']
+    user = User.query.filter(User.mongo_id == user_id).first();
+    return user.mongo_id;
+
+jwt = JWT(app, authenticate, identity)
+
+
+@app.route('/protected')
+@jwt_required()
+def protected():
+    return '%s' % current_identity
+
 
 
 class NameForm(Form):
@@ -79,6 +105,9 @@ def login():
         password = request.form['password'] ;
 
         checkUserName = User.query.filter(User.username == username).first();
+
+
+        print checkUserName.username;
 
         if checkUserName.password == password:
             print "Username Password Matched";
