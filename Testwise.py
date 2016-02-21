@@ -22,7 +22,7 @@ js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js'
 assets.register('js', js)
 
 
-css = Bundle('bower_components/angular-bootstrap/ui-bootstrap-csp.css')
+css = Bundle('bower_components/angular-bootstrap/ui-bootstrap-csp.css', 'css/style.css', 'bower_components/bootstrap/dist/css/bootstrap.css')
 assets.register('css',css)
 #Configuration of DB
 app.config['MONGOALCHEMY_DATABASE'] = 'testr'
