@@ -14,14 +14,10 @@
     <nav class="navbar navbar-inverse navbar-static-top">
       <div class="container-fluid">
         <div class="navbar-header"><a class="navbar-brand brand-title brandname">Testr</a></div>
-        <div style="" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li class="active login"><a href="#" ng-click="ctrl.openLoginDialog()">Login<span class="sr-only">(current)</span></a></li>
-          </ul>
-        </div>
+        <div ui-view="loginbutton"></div>
       </div>
     </nav>
-  <div ui-view='hgh'></div>
+  <div ui-view=''></div>
 
   {% assets "js" %}
     <script src="{{ASSET_URL}}"></script>

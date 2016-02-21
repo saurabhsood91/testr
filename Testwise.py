@@ -95,13 +95,17 @@ def internal_server_error(e):
 
 
 
-@app.route('/templates/loggedinmodal.html')
-def loggedinmodal():
-    return render_template('loggedinmodal.html')
+@app.route('/templates/<path>')
+def loggedinmodal(path):
+    return render_template(path)
 
-@app.route('/templates/landingpage.html')
-def landingpage():
-    return render_template('landingpage.html')
+# @app.route('/templates/landingpage.html')
+# def landingpage():
+#     return render_template('landingpage.html')
+#
+# @app.route('/templates/loginbutton.html')
+# def landingpage():
+#     return render_template('loginbutton.html')
 
 if __name__ == '__main__':
     app.run()
