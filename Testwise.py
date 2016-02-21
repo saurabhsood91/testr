@@ -9,7 +9,6 @@ from flask.ext.triangle import Triangle
 from flask import Flask, request, send_from_directory
 from flask.ext.assets import Environment, Bundle
 
-
 app = Flask(__name__)
 assets = Environment(app)
 app.config['SECRET_KEY'] = 'N0tHingIsImpo5Sibl3'
@@ -17,9 +16,12 @@ bootstrap = Bootstrap(app)
 moment = Moment(app)
 Triangle(app)
 
-js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js')
+js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js', 'bower_components/angular-bootstrap/ui-bootstrap.js')
 assets.register('js', js)
 
+
+css = Bundle('bower_components/angular-bootstrap/ui-bootstrap-csp.css')
+assets.register('css',css)
 
 # Class name ( Type of Object )
 class NameForm(Form):

@@ -3,12 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title>Testr</title>
+    {% assets "css" %}
+    <link  rel="stylesheet" type="text/css" href="{{ASSET_URL}}"/>
+  {% endassets %}
+
   </head>
   <body ng-controller="MainController as ctrl">
 
   {% assets "js" %}
     <script src="{{ASSET_URL}}"></script>
   {% endassets %}
+
 
   {{ctrl.yourName|angular}}
   </body>
