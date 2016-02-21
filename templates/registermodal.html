@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h3 class="modal-title"><i class="fa fa-exclamation fa-border"></i> Login</h3>
+</div>
+<div class="modal-body">
+  <label for="username">Username</label>
+  <input id="username" type="text" class="form-control" ng-model="ctrl.username"/>
+  <label for="password">Password</label>
+  <input type="password" id="password" class="form-control" ng-model="ctrl.password"/>
+    <label for="emailID">Email ID:</label>
+  <input type="email" id="emailID" class="form-control" ng-model="ctrl.emailID"/>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-success" ng-click="ctrl.register()">Register</button>
+  <button class="btn btn-danger" ng-click="ctrl.cancel()">Cancel</button>
+</div>
