@@ -24,7 +24,7 @@ moment = Moment(app)
 db = MongoAlchemy(app)
 Triangle(app)
 
-js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js', 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js', 'scripts/controllers/loggedinmodalcontroller.js')
+js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js', 'bower_components/angular-bootstrap/ui-bootstrap-tpls.js', 'scripts/controllers/loggedinmodalcontroller.js', 'bower_components/angular-ui-router/release/angular-ui-router.js')
 assets.register('js', js)
 
 
@@ -96,8 +96,12 @@ def internal_server_error(e):
 
 
 @app.route('/templates/loggedinmodal.html')
-def static_file():
+def loggedinmodal():
     return render_template('loggedinmodal.html')
+
+@app.route('/templates/landingpage.html')
+def landingpage():
+    return render_template('landingpage.html')
 
 if __name__ == '__main__':
     app.run()

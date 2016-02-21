@@ -1,4 +1,4 @@
-var app = angular.module('TestWise', ['ui.bootstrap']);
+var app = angular.module('TestWise', ['ui.bootstrap', 'ui.router']);
 
 app.controller('MainController', ['$uibModal', function($modal){
   var self = this;
@@ -16,4 +16,17 @@ app.controller('MainController', ['$uibModal', function($modal){
       // $state.go('loggedin');
     });
   };
+}])
+.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider){
+  $urlRouterProvider.otherwise('/');
+  $stateProvider.state('index', {
+    url: '/',
+    views: {
+      '': {
+        templateUrl: 'templates/landingpage.html',
+        controller: 'MainController',
+        controllerAs: 'ctrl'
+      }
+    }
+  });
 }]);
