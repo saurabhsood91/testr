@@ -24,7 +24,7 @@ moment = Moment(app)
 db = MongoAlchemy(app)
 Triangle(app)
 
-js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js')
+js = Bundle('bower_components/angular/angular.js', 'scripts/controllers/main.js', 'bower_components/angular-bootstrap/ui-bootstrap.js')
 assets.register('js', js)
 
 
@@ -34,10 +34,8 @@ class User(db.Document):
     emailId = db.StringField();
 
 
-class NameForm(Form):
-    name = StringField('What is your name?', validators=[DataRequired()])
-    submit = SubmitField('Submit')
-
+css = Bundle('bower_components/angular-bootstrap/ui-bootstrap-csp.css')
+assets.register('css',css)
 
 @app.route('/',methods=['GET', 'POST'])
 def index():
