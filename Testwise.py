@@ -21,6 +21,7 @@ Triangle(app)
 app.config['MONGOALCHEMY_DATABASE'] = 'testr'
 db = MongoAlchemy(app)
 
+
 class User(db.Document):
     name = db.StringField();
     password = db.StringField();
@@ -51,9 +52,15 @@ def index():
 
 @app.route('/register',methods=['POST'])
 def register():
-    print "TEST"
-    user = request.form['name']
-    print user
+    if request.method == 'POST':
+        print "HEllo"
+        name = request.form['name'] ;
+        password = request.form['password'] ;
+        emailID = request.form['emailID'];
+        print name + " " + password + " " + emailID ;
+        checkUserName = User(name=name, password=password, emailID=emailID);
+        checkUserName.save();
+        #print name
     #User(name=)
     return render_template('404.html'), 500
 
@@ -65,7 +72,7 @@ def page_not_found(e):
 
 @app.errorhandler(500)
 def internal_server_error(e):
-    return render_template('500.html'), 500
+    return render_template('404.html'), 500
 
 
 
