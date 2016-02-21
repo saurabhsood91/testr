@@ -1,0 +1,7 @@
+flask
+flask-mongoalchemy
+flask-wtf
+flask-bootstrap 
+flask-assets
+flask-triangle
+flask-moment
