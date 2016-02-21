@@ -70,6 +70,7 @@ def register():
     return json.dumps({'auth': 1})
 
 
+
 @app.route('/login',methods=['POST'])
 def login():
     if request.method == 'POST':
