@@ -18,6 +18,10 @@ a {
   text-transform: uppercase;
 }
 
+.nav-sidebar {
+  height: 100%;
+}
+
 .splash {
   margin-top: 40px;
   font-size: 20em !important;

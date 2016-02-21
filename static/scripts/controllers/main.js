@@ -85,7 +85,7 @@ app.controller('MainController', ['$uibModal', '$state', function($modal, $state
     views: {
       'maincontent': {
         templateUrl: 'templates/addtest.html',
-        controller: 'HomeController',
+        controller: 'AddTestController',
         controllerAs: 'ctrl'
       }
     }
