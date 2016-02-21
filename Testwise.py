@@ -45,6 +45,8 @@ class User(db.Document):
     password = db.StringField();
     emailId = db.StringField();
 
+css = Bundle('bower_components/angular-bootstrap/ui-bootstrap-csp.css', 'css/style.css', 'bower_components/bootstrap/dist/css/bootstrap.css')
+assets.register('css',css)
 
 css = Bundle('bower_components/angular-bootstrap/ui-bootstrap-csp.css')
 assets.register('css',css)
